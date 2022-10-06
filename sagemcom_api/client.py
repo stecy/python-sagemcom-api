@@ -396,6 +396,24 @@ class SagemcomClient:
 
         return port_mappings
 
+    async def run_speedtest(self) -> Dict:
+        """Execute Speedtest on Sagemcom F@st device."""
+
+        action = [
+            {
+                "id":0,
+                "method":"speedTestClient",
+                "xpath":"Device/IP/Diagnostics/SpeedTest",
+                "parameters":{"BlockTraffic":False},
+                "event-id":"34",
+            }
+        ]
+
+        response = await self.__api_request_async(action, False)
+        data = self.__get_response_value(response)
+
+        return data
+    
     async def reboot(self):
         """Reboot Sagemcom F@st device."""
         action = {
